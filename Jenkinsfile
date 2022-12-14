@@ -13,7 +13,7 @@ node('deployment') {
         sh '''rm -f *.zip'''
         // Add the config file.
         sh '''rm -f config.php'''
-        config = "<?php\n\$projectid=getenv('crowdinproject');\n\$branchid=getenv('crowdinbranch');\n\$accesstoken=getenv('crowdinkey');\n"
+        config = "<?php\n\$projectid=getenv('crowdinproject');\n\$branch=getenv('crowdinbranch');\n\$accesstoken=getenv('crowdinkey');\n"
         writeFile file: 'config.php', text: config
         // Install dependencies.
         sh '''php composer.phar install'''

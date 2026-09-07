@@ -3,7 +3,7 @@ node('deployment') {
         // Download the translation helper project and set it up.
         checkout([
             $class: 'GitSCM',
-            branches: [[name: params.repositorbranch]],
+            branches: [[name: params.repositorybranch]],
             userRemoteConfigs: [[
                 credentialsId: params.repositorykey,
                 name: 'Translations',

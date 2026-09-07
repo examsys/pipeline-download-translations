@@ -8,6 +8,12 @@ This script requires the follow plugins to be installed on Jenkins:
 
 * SSH Agent Plugin
 
+## Runner requirements
+
+* php
+* php-curl
+* [crowdin](https://crowdin.github.io/crowdin-cli/)
+
 ## Environment variables
 
 The following environment variables are used to configure the scripts.
@@ -23,4 +29,4 @@ The following environment variables are used to configure the scripts.
 
 ## Related projects
 
-* [examsys-translations](https://bitbucket.org/examsys/examsys-translations/)
+* [examsys-translations](https://github.com/examsys/examsys-translations)

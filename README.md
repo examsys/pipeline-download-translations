@@ -14,9 +14,12 @@ The following environment variables are used to configure the scripts.
 
 | Variable          | Required     | Explantion                                                                      |
 |-------------------|--------------|---------------------------------------------------------------------------------|
+| repository        | **required** | The location of the translation tool repository                                 |
+| repositorybranch  | **required** | The name of the branch in the repository that should be used                    |
 | repositorykey     | **required** | The Jenkins id for the security key used to access the repository.              |
 | crowdinbranch     | **required** | The Crowdin translation branch to download (master, develop)                    |
 | crowdinkey        | **required** | The Crowdin access token                                                        |
+| crowdinproject    | **required** | The id of the crowdin project we will use                                       |
 
 ## Related projects
 

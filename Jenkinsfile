@@ -1,16 +1,24 @@
-// The id of the Crowdin project.
-crowdinproject = 205391
-
 node('deployment') {
     stage('Preparation') {
         // Download the translation helper project and set it up.
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']],  userRemoteConfigs: [[credentialsId: repositorykey, name: 'Translations', url: 'git@bitbucket.org:examsys/examsys-translations.git']]])
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: params.repositorbranch]],
+            userRemoteConfigs: [[
+                credentialsId: params.repositorykey,
+                name: 'Translations',
+                url: params.repository
+            ]]
+        ])
+
         // Install composer.
         sh '''php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"'''
         sh '''php composer-setup.php'''
         sh '''php -r "unlink('composer-setup.php');"'''
+
         // Remove any old zip files.
         sh '''rm -f *.zip'''
+
         // Add the config file.
         sh '''rm -f config.php'''
         config = "<?php\n\$projectid=getenv('crowdinproject');\n\$branch=getenv('crowdinbranch');\n\$accesstoken=getenv('crowdinkey');\n"
@@ -18,12 +26,13 @@ node('deployment') {
         // Install dependencies.
         sh '''php composer.phar install'''
     }
+
     stage('Generate translations') {
-        withCredentials([string(credentialsId: crowdinkey, variable: 'apikey')]) {
+        withCredentials([string(credentialsId: params.crowdinkey, variable: 'apikey')]) {
             withEnv(
                 [
-                    'crowdinproject=' + crowdinproject,
-                    'crowdinbranch=' + crowdinbranch,
+                    'crowdinproject=' + params.crowdinproject,
+                    'crowdinbranch=' + params.crowdinbranch,
                     'crowdinkey=' + apikey,
                 ]
             ) {
